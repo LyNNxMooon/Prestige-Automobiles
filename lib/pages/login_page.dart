@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:prestige_automobile/constants/colors.dart';
+import 'package:prestige_automobile/firebase/firebase.dart';
 import 'package:prestige_automobile/widgets/am_text_field_widget.dart';
+
+final _firebaseService = FirebaseServices();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.15,
+              height: MediaQuery.of(context).size.height * 0.16,
             ),
             Center(
               child: SizedBox(
@@ -91,20 +94,27 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
-            const Text(
-              "If you forgot your password, please contact us to recover password",
+            const Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Forgot password?, contact us",
+                style: TextStyle(fontSize: 12),
+              ),
             ),
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  _firebaseService.firebaseSignIn(
+                      _emailController.text, _passwordController.text, context);
+                },
                 child: Container(
-                  width: 130,
+                  width: 150,
                   height: 40,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -118,24 +128,24 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Are you the new user?",
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     const Text(
+            //       "Are you the new user?",
+            //     ),
+            //     const SizedBox(
+            //       width: 10,
+            //     ),
+            //     InkWell(
+            //       onTap: () {},
+            //       child: const Text(
+            //         'Register',
+            //         style: TextStyle(fontWeight: FontWeight.bold),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
