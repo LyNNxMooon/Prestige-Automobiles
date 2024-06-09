@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prestige_automobile/constants/colors.dart';
 import 'package:prestige_automobile/firebase/firebase.dart';
@@ -109,9 +110,11 @@ class _LoginPageState extends State<LoginPage> {
             Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () {
-                  _firebaseService.firebaseSignIn(
-                      _emailController.text, _passwordController.text, context);
+                onTap: () async {
+                  _firebaseService
+                      .firebaseSignIn(_emailController.text,
+                          _passwordController.text, context)
+                      .then((value) {});
                 },
                 child: Container(
                   width: 150,
