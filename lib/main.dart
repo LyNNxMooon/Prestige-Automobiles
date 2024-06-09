@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:prestige_automobile/constants/colors.dart';
 import 'package:prestige_automobile/firebase_options.dart';
 import 'package:prestige_automobile/pages/auth_page.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(fontFamily: 'Prompt'),
       home: AnimatedSplashScreen(
           centered: true,

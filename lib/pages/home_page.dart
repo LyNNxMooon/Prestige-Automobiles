@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prestige_automobile/constants/colors.dart';
 import 'package:prestige_automobile/controller/home_controller.dart';
+import 'package:prestige_automobile/widgets/card_item_widget.dart';
 
 final _homeController = Get.put(HomeController());
 
@@ -72,7 +73,71 @@ class _HomePageState extends State<HomePage> {
                         enlargeCenterPage: true,
                         enlargeFactor: 0.3,
                         scrollDirection: Axis.horizontal,
-                      )))
+                      ))),
+          const SizedBox(
+            height: 40,
+          ),
+          Obx(() => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Available Cars",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "In Stock: ${_homeController.cars.length}",
+                      style: const TextStyle(fontSize: 16),
+                    )
+                  ],
+                ),
+              )),
+          const SizedBox(
+            height: 30,
+          ),
+          Obx(
+            () => _homeController.isCarLoading.value
+                ? const Padding(
+                    padding: EdgeInsets.only(top: 80),
+                    child: Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  )
+                : _homeController.cars.isEmpty
+                    ? const Padding(
+                        padding: EdgeInsets.only(top: 80),
+                        child: Center(
+                          child: Text("No Cars!"),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 5.0,
+                            crossAxisSpacing: 0.0,
+                            mainAxisExtent: 235,
+                          ),
+                          itemCount: _homeController.cars.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: CardItemWidget(
+                                  price:
+                                      _homeController.cars[index].sellingPrice,
+                                  name: _homeController.cars[index].name,
+                                  url: _homeController.cars[index].url),
+                            );
+                          },
+                        ),
+                      ),
+          )
         ],
       ),
     ));
