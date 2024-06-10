@@ -197,6 +197,7 @@ class _AddFormPageState extends State<AddFormPage> {
                       _purchasePriceController.clear();
                       _sellingPriceController.clear();
                       _yearController.clear();
+                      _descriptionController.clear();
                       setState(() {});
                       Fluttertoast.showToast(
                           msg: "Car Added!", backgroundColor: kSuccessColor);
