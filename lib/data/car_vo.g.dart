@@ -15,6 +15,7 @@ CarVO _$CarVOFromJson(Map<String, dynamic> json) => CarVO(
       sellingPrice: (json['selling_price'] as num).toInt(),
       category: json['category'] as String,
       year: (json['year'] as num).toInt(),
+      description: json['description'] as String,
     );
 
 Map<String, dynamic> _$CarVOToJson(CarVO instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$CarVOToJson(CarVO instance) => <String, dynamic>{
       'selling_price': instance.sellingPrice,
       'category': instance.category,
       'year': instance.year,
+      'description': instance.description,
     };

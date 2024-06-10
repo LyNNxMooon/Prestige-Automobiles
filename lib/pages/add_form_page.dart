@@ -26,6 +26,7 @@ class _AddFormPageState extends State<AddFormPage> {
   final _purchasePriceController = TextEditingController();
   final _sellingPriceController = TextEditingController();
   final _yearController = TextEditingController();
+  final _descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -143,6 +144,15 @@ class _AddFormPageState extends State<AddFormPage> {
                 hint: "Year",
               ),
               const SizedBox(
+                height: 20,
+              ),
+              AMTextFormField(
+                maxLines: 6,
+                controller: _descriptionController,
+                textInputAction: TextInputAction.next,
+                hint: "Description",
+              ),
+              const SizedBox(
                 height: 40,
               ),
               GestureDetector(
@@ -175,7 +185,8 @@ class _AddFormPageState extends State<AddFormPage> {
                             _categoryController.text,
                             int.parse(_purchasePriceController.text),
                             int.parse(_sellingPriceController.text),
-                            int.parse(_yearController.text))
+                            int.parse(_yearController.text),
+                            _descriptionController.text)
                         .then((value) {
                       _homeController.callCars();
                       Get.back();
