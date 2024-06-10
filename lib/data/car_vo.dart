@@ -19,6 +19,8 @@ class CarVO {
   final String category;
   @JsonKey(name: 'year')
   final int year;
+  @JsonKey(name: 'description')
+  final String description;
 
   CarVO(
       {required this.id,
@@ -28,7 +30,8 @@ class CarVO {
       required this.purchasePrice,
       required this.sellingPrice,
       required this.category,
-      required this.year});
+      required this.year,
+      required this.description});
 
   factory CarVO.fromJson(Map<String, dynamic> json) => _$CarVOFromJson(json);
 

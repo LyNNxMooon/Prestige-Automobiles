@@ -13,7 +13,7 @@ class CardItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // alignment: Alignment.center,
-      margin: const EdgeInsets.all(15),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: kCardColor,
         borderRadius: BorderRadius.circular(10), //border corner radius

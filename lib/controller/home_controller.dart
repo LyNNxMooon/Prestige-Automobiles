@@ -16,6 +16,8 @@ class HomeController extends GetxController {
       if (event.isNotEmpty) {
         banners.value = event;
         isLoading.value = false;
+      } else {
+        isLoading.value = false;
       }
       update();
     });
@@ -30,6 +32,8 @@ class HomeController extends GetxController {
     _firebaseService.getCarsStream().listen((event) {
       if (event.isNotEmpty) {
         cars.value = event;
+        isCarLoading.value = false;
+      } else {
         isCarLoading.value = false;
       }
     });
