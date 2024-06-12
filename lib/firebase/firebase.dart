@@ -46,6 +46,9 @@ class FirebaseServices {
       .doc(carVO.id.toString())
       .set(carVO.toJson());
 
+  Future deleteCar(int id) =>
+      _firebaseFirestore.collection("cars").doc(id.toString()).delete();
+
   Stream<List<CarVO>> getCarsStream() =>
       _firebaseFirestore.collection("cars").snapshots().map((event) {
         return event.docs.map((document) {

@@ -1,12 +1,33 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:prestige_automobile/constants/colors.dart';
+import 'package:prestige_automobile/controller/car_detail_controller.dart';
+import 'package:prestige_automobile/controller/home_controller.dart';
 import 'package:prestige_automobile/data/car_vo.dart';
 
-class CarDetailPage extends StatelessWidget {
+final _carDetailController = Get.put(CarDetailController());
+final _homeController = Get.put(HomeController());
+
+class CarDetailPage extends StatefulWidget {
   const CarDetailPage({super.key, required this.car});
 
   final CarVO car;
+
+  @override
+  State<CarDetailPage> createState() => _CarDetailPageState();
+}
+
+class _CarDetailPageState extends State<CarDetailPage> {
+  late TextEditingController _priceController;
+
+  @override
+  void initState() {
+    _priceController =
+        TextEditingController(text: "${widget.car.sellingPrice}");
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +42,51 @@ class CarDetailPage extends StatelessWidget {
               height: 20,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 18,
-                    )),
-                const SizedBox(
-                  width: 10,
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          size: 18,
+                        )),
+                    Container(
+                      width: 100,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: kSecondaryColor),
+                      child: Center(
+                        child: Text(
+                          widget.car.category,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                Container(
-                  width: 100,
-                  height: 30,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: kSecondaryColor),
-                  child: Center(
-                    child: Text(
-                      car.category,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => const CupertinoActivityIndicator(),
+                    );
+                    _carDetailController.deleteCar(widget.car.id).then((value) {
+                      _homeController.callCars();
+                      Get.back();
+
+                      Fluttertoast.showToast(
+                          msg: "Car Deleted!", backgroundColor: kErrorColor);
+                      Get.back();
+                    });
+                  },
+                  child: const Icon(
+                    Icons.delete,
+                    color: kErrorColor,
                   ),
                 )
               ],
@@ -60,7 +103,7 @@ class CarDetailPage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    car.url,
+                    widget.car.url,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -73,16 +116,33 @@ class CarDetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Name : ${car.name}",
+                  "Name : ${widget.car.name}",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 18),
                 ),
-                Text(
-                  "\$ ${car.sellingPrice}",
-                  style: const TextStyle(
-                      color: kSecondaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    const Text(
+                      "\$ ",
+                      style: TextStyle(
+                          color: kSecondaryColor, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: 80,
+                      height: 50,
+                      child: TextField(
+                        controller: _priceController,
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(
+                            color: kSecondaryColor,
+                            fontWeight: FontWeight.bold),
+                        decoration: const InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -99,7 +159,7 @@ class CarDetailPage extends StatelessWidget {
                       color: kThirdColor),
                   child: Center(
                     child: Text(
-                      car.model,
+                      widget.car.model,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, color: kPrimaryColor),
                     ),
@@ -123,7 +183,7 @@ class CarDetailPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${car.year}",
+                  "${widget.car.year}",
                   style: const TextStyle(fontSize: 16),
                 )
               ],
@@ -145,21 +205,47 @@ class CarDetailPage extends StatelessWidget {
               height: 20,
             ),
             Text(
-              car.description,
+              widget.car.description,
               textAlign: TextAlign.justify,
             ),
             const SizedBox(
               height: 40,
             ),
-            Container(
-              height: 40,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: kSecondaryColor),
-              child: const Center(
-                child: Text(
-                  "Update",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => const CupertinoActivityIndicator(),
+                );
+                _carDetailController
+                    .saveCar(
+                        widget.car.model,
+                        widget.car.name,
+                        widget.car.category,
+                        widget.car.purchasePrice,
+                        int.parse(_priceController.text),
+                        widget.car.year,
+                        widget.car.description,
+                        widget.car.id,
+                        widget.car.url)
+                    .then((value) {
+                  _homeController.callCars();
+                  Get.back();
+
+                  Fluttertoast.showToast(
+                      msg: "Car Updated!", backgroundColor: kSuccessColor);
+                });
+              },
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: kSecondaryColor),
+                child: const Center(
+                  child: Text(
+                    "Update",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),

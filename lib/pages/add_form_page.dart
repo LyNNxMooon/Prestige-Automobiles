@@ -170,13 +170,7 @@ class _AddFormPageState extends State<AddFormPage> {
                   } else {
                     showDialog(
                       context: context,
-                      builder: (_) => const AlertDialog(
-                        content: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CupertinoActivityIndicator(),
-                        ),
-                      ),
+                      builder: (_) => const CupertinoActivityIndicator(),
                     );
                     _addFormController
                         .saveCar(
