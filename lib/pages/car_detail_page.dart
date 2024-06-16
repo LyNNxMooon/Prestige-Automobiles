@@ -123,12 +123,12 @@ class _CarDetailPageState extends State<CarDetailPage> {
                 Row(
                   children: [
                     const Text(
-                      "\$ ",
+                      "MMK : ",
                       style: TextStyle(
                           color: kSecondaryColor, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
-                      width: 80,
+                      width: 100,
                       height: 50,
                       child: TextField(
                         controller: _priceController,
@@ -223,7 +223,7 @@ class _CarDetailPageState extends State<CarDetailPage> {
                         widget.car.name,
                         widget.car.category,
                         widget.car.purchasePrice,
-                        int.parse(_priceController.text),
+                        double.parse(_priceController.text),
                         widget.car.year,
                         widget.car.description,
                         widget.car.id,

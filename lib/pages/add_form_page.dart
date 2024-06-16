@@ -24,7 +24,7 @@ class _AddFormPageState extends State<AddFormPage> {
   final _nameController = TextEditingController();
   final _categoryController = TextEditingController();
   final _purchasePriceController = TextEditingController();
-  final _sellingPriceController = TextEditingController();
+  final _profitController = TextEditingController();
   final _yearController = TextEditingController();
   final _descriptionController = TextEditingController();
   @override
@@ -121,17 +121,17 @@ class _AddFormPageState extends State<AddFormPage> {
                 controller: _purchasePriceController,
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
-                hint: "Purchase Price",
+                hint: "Purchase Price (\$)",
               ),
               const SizedBox(
                 height: 20,
               ),
               AMTextFormField(
                 maxLines: 1,
-                controller: _sellingPriceController,
+                controller: _profitController,
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
-                hint: "Selling Price",
+                hint: "Profit Margin Rate (%)",
               ),
               const SizedBox(
                 height: 20,
@@ -162,7 +162,7 @@ class _AddFormPageState extends State<AddFormPage> {
                       _nameController.text.isEmpty ||
                       _categoryController.text.isEmpty ||
                       _purchasePriceController.text.isEmpty ||
-                      _sellingPriceController.text.isEmpty ||
+                      _profitController.text.isEmpty ||
                       _yearController.text.isEmpty) {
                     Fluttertoast.showToast(
                         msg: "Fill all the fields!",
@@ -177,10 +177,10 @@ class _AddFormPageState extends State<AddFormPage> {
                             _modelController.text,
                             _nameController.text,
                             _categoryController.text,
-                            int.parse(_purchasePriceController.text),
-                            int.parse(_sellingPriceController.text),
+                            double.parse(_purchasePriceController.text),
                             int.parse(_yearController.text),
-                            _descriptionController.text)
+                            _descriptionController.text,
+                            double.parse(_profitController.text))
                         .then((value) {
                       _homeController.callCars();
                       Get.back();
@@ -189,7 +189,7 @@ class _AddFormPageState extends State<AddFormPage> {
                       _nameController.clear();
                       _categoryController.clear();
                       _purchasePriceController.clear();
-                      _sellingPriceController.clear();
+                      _profitController.clear();
                       _yearController.clear();
                       _descriptionController.clear();
                       setState(() {});

@@ -12,9 +12,9 @@ class CarVO {
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'purchase_price')
-  final int purchasePrice;
+  final double purchasePrice;
   @JsonKey(name: 'selling_price')
-  final int sellingPrice;
+  final double sellingPrice;
   @JsonKey(name: 'category')
   final String category;
   @JsonKey(name: 'year')
