@@ -12,7 +12,7 @@ class SearchItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 80,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15), color: kPrimaryColor),
       padding: const EdgeInsets.all(10),
@@ -22,8 +22,8 @@ class SearchItemTile extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 70,
-                height: 50,
+                width: 80,
+                height: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),

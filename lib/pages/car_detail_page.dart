@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:prestige_automobile/constants/colors.dart';
 import 'package:prestige_automobile/controller/car_detail_controller.dart';
 import 'package:prestige_automobile/controller/home_controller.dart';
+import 'package:prestige_automobile/controller/search_controller.dart';
 import 'package:prestige_automobile/data/car_vo.dart';
 
 final _carDetailController = Get.put(CarDetailController());
 final _homeController = Get.put(HomeController());
+final _searchController = Get.put(SearchPageController());
 
 class CarDetailPage extends StatefulWidget {
   const CarDetailPage({super.key, required this.car});
@@ -77,6 +79,7 @@ class _CarDetailPageState extends State<CarDetailPage> {
                     );
                     _carDetailController.deleteCar(widget.car.id).then((value) {
                       _homeController.callCars();
+                      _searchController.callSearch(() {});
                       Get.back();
 
                       Fluttertoast.showToast(
