@@ -9,11 +9,13 @@ class AddCarController extends GetxController {
 
   final _firebaseService = FirebaseServices();
 
-  Future saveCar(String model, String name, String category, int purchasePrice,
-      int sellingPrice, int year, String description) async {
+  Future saveCar(String model, String name, String category,
+      double purchasePrice, int year, String description, double profit) async {
     int id = DateTime.now().millisecondsSinceEpoch;
 
     String fileURL = await _uploadFileToFirebaseStorage();
+
+    double sellingPrice = (purchasePrice * 4300) * (1 + (profit / 100));
 
     final car = CarVO(
         id: id,

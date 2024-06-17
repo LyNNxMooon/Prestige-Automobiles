@@ -56,6 +56,17 @@ class FirebaseServices {
         }).toList();
       });
 
+  Future<List<CarVO>> getSearchCarsStream() async {
+    var data = await FirebaseFirestore.instance
+        .collection('cars')
+        .orderBy('name')
+        .get();
+
+    return data.docs.map((document) {
+      return CarVO.fromJson(document.data());
+    }).toList();
+  }
+
   //firebase storage
 
   static final _firebaseStorage = FirebaseStorage.instance;

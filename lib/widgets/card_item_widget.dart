@@ -7,7 +7,7 @@ class CardItemWidget extends StatelessWidget {
 
   final String name;
   final String url;
-  final int price;
+  final double price;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +60,16 @@ class CardItemWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              '$price \$',
-              style: const TextStyle(color: kSecondaryColor),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Text(
+                    '$price MMK',
+                    style: const TextStyle(color: kSecondaryColor),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(

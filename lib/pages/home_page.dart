@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:prestige_automobile/constants/colors.dart';
 import 'package:prestige_automobile/controller/home_controller.dart';
 import 'package:prestige_automobile/pages/car_detail_page.dart';
+import 'package:prestige_automobile/pages/search_page.dart';
 import 'package:prestige_automobile/widgets/card_item_widget.dart';
 
 final _homeController = Get.put(HomeController());
@@ -28,7 +29,13 @@ class _HomePageState extends State<HomePage> {
           "Prestige Automobile",
           style: TextStyle(fontWeight: FontWeight.bold, color: kSecondaryColor),
         ),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(() => const SearchPage());
+              },
+              icon: const Icon(Icons.search))
+        ],
       ),
       body: ListView(
         children: [
