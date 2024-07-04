@@ -30,6 +30,22 @@ class FirebaseServices {
     }
   }
 
+  Future firebaseSignUp(
+      String email, String password, BuildContext context) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(e.message.toString()),
+          );
+        },
+      );
+    }
+  }
   //CLoud Firestore
 
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -57,11 +73,8 @@ class FirebaseServices {
       });
 
   Future<List<CarVO>> getSearchCarsStream() async {
-    var data = await FirebaseFirestore.instance
-        .collection('cars')
-        .orderBy('name')
-        .get();
-
+    var data =
+        await _firebaseFirestore.collection('cars').orderBy('name').get();
     return data.docs.map((document) {
       return CarVO.fromJson(document.data());
     }).toList();

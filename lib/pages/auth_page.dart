@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:prestige_automobile/pages/login_page.dart';
+import 'package:prestige_automobile/pages/login_and_register_toggle_page.dart';
 import 'package:prestige_automobile/pages/navigator_page.dart';
 
 class AuthPage extends StatelessWidget {
@@ -15,10 +15,10 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             //Navigator.pop(context);
-            Fluttertoast.showToast(msg: "Successfully Login!");
+            Fluttertoast.showToast(msg: "Authentication Success!");
             return const NavigatorPage();
           } else {
-            return const LoginPage();
+            return const LoginOrRegister();
           }
         },
       ),
